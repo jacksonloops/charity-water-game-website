@@ -1,143 +1,392 @@
-/* Charity: water Brand Colors & Fonts
+/* ============================================================
+   Water Quest – White / Yellow / Gray / Black palette
+   ============================================================ */
 
-Primary Colors:
-- Yellow:     #FFC907
-- Blue:       #2E9DF7
-
-Secondary Colors:
-- Light Blue: #8BD1CB
-- Green:      #4FCB53
-- Orange:     #FF902A
-- Red:        #F5402C
-- Dark Green: #159A48
-- Pink:       #F16061
-
-Fonts:
-- Proxima Nova
-- Avenir
-
-*/
-
-* {
-  box-sizing: border-box;
+:root {
+  --yellow:      #FFC907;
+  --yellow-dark: #E6B400;
+  --yellow-soft: #FFF3B0;
+  --black:       #111111;
+  --dark:        #1C1C1C;
+  --gray-dark:   #2E2E2E;
+  --gray-mid:    #4A4A4A;
+  --gray-light:  #C8C8C8;
+  --white:       #FFFFFF;
+  --off-white:   #F5F5F5;
+  --bg:          var(--white);
+  --surface:     var(--off-white);
+  --surface2:    #E8E8E8;
+  --text:        var(--black);
+  --muted:       var(--gray-mid);
+  --pipe-empty:  #D0D0D0;
+  --pipe-fill:   var(--yellow);
+  --pipe-water:  var(--yellow-dark);
+  --pipe-border: #BBBBBB;
+  --cell-size:   80px;
+  --pipe-thick:  22px;
 }
 
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 30px;
-  background-color: #f0f0f0;
-  color: #333;
+  font-family: 'Nunito', sans-serif;
+  background: var(--white);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-x: hidden;
+}
+
+/* Subtle background texture */
+.bg-drops {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 600px 400px at 10% 20%, rgba(255,201,7,0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 400px 600px at 90% 80%, rgba(0,0,0,0.03) 0%, transparent 70%);
 }
 
 .container {
-  max-width: 750px;
-  margin: 50px auto;
-  background-color: #fff;
-  padding: 40px;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1;
+  max-width: 620px;
+  width: 100%;
 }
 
-h1 {
+/* ── Header ── */
+header {
   text-align: center;
-  font-size: 30px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: #333;
+  margin-bottom: 28px;
 }
 
-h1 img {
-  height: 50px;
-  margin-right: 15px;
+.logo-badge {
+  display: block;
+  margin: 0 auto 10px;
+  width: 120px;
+  height: auto;
+  animation: float 3s ease-in-out infinite;
+}
+
+.logo-badge img {
+  width: 100%;
+  height: auto;
   display: block;
 }
 
-.game-instructions {
-  font-size: 18px;
-  margin-bottom: 30px;
-  text-align: center;
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
 }
 
-.stats {
+h1 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 52px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--black);
+  line-height: 1;
+}
+
+h1 span {
+  color: var(--yellow-dark);
+}
+
+.tagline {
+  color: var(--gray-mid);
+  font-size: 15px;
+  margin-top: 6px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* ── Stats bar ── */
+.stats-bar {
   display: flex;
-  justify-content: space-around;
-  margin-bottom: 30px;
-  background-color: #f5f5f5;
-  padding: 15px 0;
-  border-radius: 8px;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 18px;
 }
 
-.stats p {
-  margin: 0;
-  font-size: 18px;
-  font-weight: bold;
-  color: #333;
+.stat-pill {
+  background: var(--surface);
+  border: 1.5px solid var(--pipe-border);
+  border-radius: 40px;
+  padding: 8px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 80px;
+}
+
+.timer-pill {
+  border-color: var(--yellow-dark);
+  background: var(--yellow-soft);
+}
+
+.stat-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--muted);
+}
+
+.stat-value {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--black);
+  line-height: 1;
+}
+
+.timer-pill .stat-value { color: var(--gray-dark); }
+
+.stat-value.urgent { color: #cc2200 !important; animation: pulse 0.5s ease infinite alternate; }
+@keyframes pulse { to { opacity: 0.5; } }
+
+/* ── Message bar ── */
+.message-bar {
+  text-align: center;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 14px;
+  background: var(--yellow-soft);
+  border: 1px solid var(--yellow-dark);
+  color: var(--gray-dark);
+  transition: opacity 0.3s;
+}
+.message-bar.hidden { display: none; }
+
+/* ── Grid wrapper ── */
+.grid-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
 }
 
 .game-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
-  margin: 0 auto;
-  max-width: 500px;
+  grid-template-columns: repeat(5, var(--cell-size));
+  grid-template-rows:    repeat(5, var(--cell-size));
+  gap: 4px;
+  background: var(--surface);
+  border: 2px solid var(--pipe-border);
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10), inset 0 1px 0 rgba(255,255,255,0.8);
 }
 
+/* ── Grid cells ── */
 .grid-cell {
-  background-color: #e8e8e8;
+  width: var(--cell-size);
+  height: var(--cell-size);
+  background: var(--pipe-empty);
   border-radius: 8px;
-  aspect-ratio: 1;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.15s, box-shadow 0.15s;
+  overflow: visible;
+}
+
+.grid-cell:hover:not(.special) {
+  background: #C0C0C0;
+  box-shadow: 0 0 0 2px var(--yellow-dark);
+}
+
+.grid-cell.special { cursor: default; }
+
+.grid-cell.connected {
+  background: var(--yellow-soft);
+}
+
+.grid-cell.source {
+  background: #FFFBEA;
+  border: 2px solid var(--yellow-dark);
+  cursor: default;
+}
+
+.grid-cell.well {
+  background: #F0F0F0;
+  border: 2px solid var(--gray-dark);
+  cursor: default;
+}
+
+/* ── Pipe SVG ── */
+.grid-cell svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
+  pointer-events: none;
+}
+
+/* ── Cell labels ── */
+.cell-label {
+  position: absolute;
+  bottom: 4px;
+  left: 0; right: 0;
+  text-align: center;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+.source .cell-label { color: var(--yellow-dark); }
+.well   .cell-label { color: var(--gray-dark); }
+
+/* ── Win / Lose Overlays ── */
+.win-overlay, .lose-overlay {
+  position: absolute;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  position: relative;
-  overflow: hidden;
+  border-radius: 16px;
+  backdrop-filter: blur(6px);
+  z-index: 10;
 }
 
-.water-can-wrapper {
+#confetti-canvas {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 70px;
-  height: 70px;
-  /* Ensure the wrapper is properly centered */
-}
-
-.water-can {
+  inset: 0;
   width: 100%;
   height: 100%;
-  background-image: url('img/water-can.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  cursor: pointer;
-  border-radius: 50%;
-  animation: popUp 0.5s cubic-bezier(0.17, 0.67, 0.34, 2);
-  transform-origin: center; /* Ensure scaling happens from the center */
+  pointer-events: none;
+  border-radius: 16px;
 }
 
-@keyframes popUp {
-  0% {
-    transform: scale(0.5); /* Start scaling from the center */
-  }
-  100% {
-    transform: scale(1); /* End scaling at full size */
-  }
+@keyframes winCardPop {
+  0%   { opacity: 0; transform: scale(0.6) translateY(20px); }
+  70%  { opacity: 1; transform: scale(1.05) translateY(-4px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
 }
 
+.win-card.animate-in {
+  animation: winCardPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
 
+.win-overlay  { background: rgba(255,201,7,0.15); }
+.lose-overlay { background: rgba(0,0,0,0.15); }
+
+.win-overlay.hidden, .lose-overlay.hidden { display: none; }
+
+.win-card, .lose-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 36px 48px;
+  text-align: center;
+  box-shadow: 0 16px 60px rgba(0,0,0,0.18);
+  border: 2px solid var(--yellow);
+}
+
+.win-icon, .lose-icon { font-size: 52px; margin-bottom: 12px; }
+
+.win-card h2  {
+  color: var(--black);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 34px;
+}
+.lose-card h2 {
+  color: var(--gray-dark);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 34px;
+}
+
+.win-card p, .lose-card p {
+  color: var(--muted);
+  margin: 10px 0 24px;
+  font-size: 15px;
+}
+
+.win-card p strong { color: var(--black); }
+
+/* ── Buttons ── */
 button {
-  background-color: #4CAF50;
-  color: white;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
   border: none;
-  padding: 12px 24px;
-  font-size: 16px;
-  border-radius: 8px;
+  border-radius: 12px;
+  padding: 12px 28px;
   cursor: pointer;
-  display: block;
-  margin: 30px auto 0;
-  transition: background-color 0.2s;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: var(--yellow);
+  color: var(--black);
+  box-shadow: 0 4px 16px rgba(255,201,7,0.35);
+}
+.btn-primary:hover { background: var(--yellow-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,201,7,0.4); }
+.btn-primary:active { transform: translateY(0); }
+
+.btn-secondary {
+  background: var(--surface2);
+  color: var(--black);
+  border: 1.5px solid var(--pipe-border);
+}
+.btn-secondary:hover:not(:disabled) { background: var(--gray-light); }
+.btn-secondary:disabled { opacity: 0.35; cursor: not-allowed; }
+
+#next-level-btn {
+  background: var(--black);
+  color: var(--yellow);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+#next-level-btn:hover { background: var(--gray-dark); transform: translateY(-2px); }
+
+#retry-btn {
+  background: var(--gray-dark);
+  color: var(--white);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+#retry-btn:hover { background: var(--black); transform: translateY(-2px); }
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 22px;
+}
+
+/* ── Instructions ── */
+.instructions {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.src-label  { color: var(--yellow-dark); font-weight: 700; }
+.well-label { color: var(--gray-dark);   font-weight: 700; }
+
+/* ── Water flow animation ── */
+@keyframes flowAnim {
+  0%   { stroke-dashoffset: 40; }
+  100% { stroke-dashoffset: 0; }
+}
+
+.pipe-water-flow {
+  stroke-dasharray: 8 4;
+  animation: flowAnim 0.6s linear infinite;
+}
+
+/* ── Responsive ── */
+@media (max-width: 520px) {
+  :root { --cell-size: 58px; --pipe-thick: 16px; }
+  h1 { font-size: 38px; }
+  .logo-badge { width: 90px; }
+  .win-card, .lose-card { padding: 24px 28px; }
 }

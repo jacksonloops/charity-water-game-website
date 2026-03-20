@@ -1,23 +1,71 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>Water Quest</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Water Quest – Pipe Puzzle</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Barlow+Condensed:wght@600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
+  <div class="bg-drops"></div>
+
   <div class="container">
-    <h1>Water Quest</h1>
-    <p class="game-instructions">Collect 20 items to complete the game!</p>
-    <div class="stats">
-      <p>Cans Collected: <span id="current-cans">0</span></p>
-      <p>Time Left: <span id="timer">30</span>s</p>
+    <header>
+      <div class="logo-badge"><img src="img/cw_logo.png" alt="charity: water logo" /></div>
+      <h1>Charity Water Quest</h1>
+      <p class="tagline">Connect the pipes. Bring water to the well.</p>
+    </header>
+
+    <div class="stats-bar">
+      <div class="stat-pill">
+        <span class="stat-label">Moves</span>
+        <span class="stat-value" id="moves">0</span>
+      </div>
+      <div class="stat-pill timer-pill">
+        <span class="stat-label">Time</span>
+        <span class="stat-value" id="timer">60</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-label">Level</span>
+        <span class="stat-value" id="level">1</span>
+      </div>
     </div>
-    <div id="achievements" class="achievement"></div>
-    <div class="game-grid"></div>
-    <button id="start-game">Start Game</button>
+
+    <div id="message-bar" class="message-bar hidden"></div>
+
+    <div class="grid-wrapper">
+      <div class="game-grid" id="game-grid"></div>
+      <div id="win-overlay" class="win-overlay hidden">
+        <canvas id="confetti-canvas"></canvas>
+        <div class="win-card" id="win-card" style="opacity:0;transform:scale(0.7)">
+          <div class="win-icon">💧</div>
+          <h2>Water Flowing!</h2>
+          <p>You connected the pipes in <strong id="win-moves">0</strong> moves!</p>
+          <button id="next-level-btn">Next Level →</button>
+        </div>
+      </div>
+      <div id="lose-overlay" class="lose-overlay hidden">
+        <div class="lose-card">
+          <div class="lose-icon">⏱️</div>
+          <h2>Time's Up!</h2>
+          <p>The village is still waiting for water.</p>
+          <button id="retry-btn">Try Again</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button id="start-btn" class="btn-primary">▶ Start Game</button>
+      <button id="reset-btn" class="btn-secondary" disabled>↺ Reset</button>
+    </div>
+
+    <div class="instructions">
+      <p>🔄 Click any pipe to rotate it 90° · Connect <span class="src-label">SOURCE</span> → <span class="well-label">WELL</span></p>
+    </div>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
