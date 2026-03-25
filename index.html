@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Water Quest – Pipe Puzzle</title>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Barlow+Condensed:wght@600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Cormorant:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -14,57 +14,100 @@
   <div class="container">
     <header>
       <div class="logo-badge"><img src="img/cw_logo.png" alt="charity: water logo" /></div>
-      <h1>Charity Water Quest</h1>
+      <h1>charity: water quest</h1>
       <p class="tagline">Connect the pipes. Bring water to the well.</p>
     </header>
 
-    <div class="stats-bar">
-      <div class="stat-pill">
-        <span class="stat-label">Moves</span>
-        <span class="stat-value" id="moves">0</span>
-      </div>
-      <div class="stat-pill timer-pill">
-        <span class="stat-label">Time</span>
-        <span class="stat-value" id="timer">60</span>
-      </div>
-      <div class="stat-pill">
-        <span class="stat-label">Level</span>
-        <span class="stat-value" id="level">1</span>
+    <!-- ── Difficulty Screen ── -->
+    <div id="difficulty-screen">
+      <p class="difficulty-prompt">choose your difficulty</p>
+      <div class="difficulty-cards">
+        <button class="diff-card diff-easy" data-diff="easy">
+          <span class="diff-icon">💧</span>
+          <span class="diff-name">easy</span>
+          <span class="diff-desc">90 seconds · fewer pipes</span>
+        </button>
+        <button class="diff-card diff-medium" data-diff="medium">
+          <span class="diff-icon">🌊</span>
+          <span class="diff-name">medium</span>
+          <span class="diff-desc">60 seconds · mixed pipes</span>
+        </button>
+        <button class="diff-card diff-hard" data-diff="hard">
+          <span class="diff-icon">⚡</span>
+          <span class="diff-name">hard</span>
+          <span class="diff-desc">40 seconds · all random</span>
+        </button>
       </div>
     </div>
 
-    <div id="message-bar" class="message-bar hidden"></div>
-
-    <div class="grid-wrapper">
-      <div class="game-grid" id="game-grid"></div>
-      <div id="win-overlay" class="win-overlay hidden">
-        <canvas id="confetti-canvas"></canvas>
-        <div class="win-card" id="win-card" style="opacity:0;transform:scale(0.7)">
-          <div class="win-icon">💧</div>
-          <h2>Water Flowing!</h2>
-          <p>You connected the pipes in <strong id="win-moves">0</strong> moves!</p>
-          <button id="next-level-btn">Next Level →</button>
+    <!-- ── Game Screen (hidden until difficulty chosen) ── -->
+    <div id="game-screen" class="hidden">
+      <div class="stats-bar">
+        <div class="stat-pill">
+          <span class="stat-label">Moves</span>
+          <span class="stat-value" id="moves">0</span>
+        </div>
+        <div class="stat-pill timer-pill">
+          <span class="stat-label">Time</span>
+          <span class="stat-value" id="timer">60</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-label">Level</span>
+          <span class="stat-value" id="level">1</span>
+        </div>
+        <div class="stat-pill diff-pill" id="diff-pill">
+          <span class="stat-label">Mode</span>
+          <span class="stat-value" id="diff-display">—</span>
         </div>
       </div>
-      <div id="lose-overlay" class="lose-overlay hidden">
-        <div class="lose-card">
-          <div class="lose-icon">⏱️</div>
-          <h2>Time's Up!</h2>
-          <p>The village is still waiting for water.</p>
-          <button id="retry-btn">Try Again</button>
+
+      <div id="message-bar" class="message-bar hidden"></div>
+
+      <div class="grid-wrapper">
+        <div class="game-grid" id="game-grid"></div>
+        <div id="win-overlay" class="win-overlay hidden">
+          <canvas id="confetti-canvas"></canvas>
+          <div class="win-card" id="win-card" style="opacity:0;transform:scale(0.7)">
+            <div class="win-icon">💧</div>
+            <h2>water flowing!</h2>
+            <p>You connected the pipes in <strong id="win-moves">0</strong> moves!</p>
+            <div class="win-buttons">
+              <button id="next-level-btn">next level →</button>
+              <button id="change-diff-btn" class="btn-secondary">change difficulty</button>
+            </div>
+          </div>
+        </div>
+        <div id="lose-overlay" class="lose-overlay hidden">
+          <div class="lose-card">
+            <div class="lose-icon">⏱️</div>
+            <h2>time's up!</h2>
+            <p>The village is still waiting for water.</p>
+            <div class="win-buttons">
+              <button id="retry-btn">try again</button>
+              <button id="change-diff-btn-lose" class="btn-secondary">change difficulty</button>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="controls">
-      <button id="start-btn" class="btn-primary">▶ Start Game</button>
-      <button id="reset-btn" class="btn-secondary" disabled>↺ Reset</button>
-    </div>
+      <div class="controls">
+        <button id="reset-btn" class="btn-secondary" disabled>↺ reset</button>
+        <button id="back-btn" class="btn-secondary">← difficulty</button>
+      </div>
 
-    <div class="instructions">
-      <p>🔄 Click any pipe to rotate it 90° · Connect <span class="src-label">SOURCE</span> → <span class="well-label">WELL</span></p>
+      <div class="instructions">
+        <p>🔄 Click any pipe to rotate it 90° · Connect <span class="src-label">SOURCE</span> → <span class="well-label">WELL</span></p>
+      </div>
     </div>
   </div>
+
+  <!-- ── Fixed Footer ── -->
+  <footer class="site-footer">
+    <span class="footer-made">a game for good&nbsp;&nbsp;·&nbsp;&nbsp;</span>
+    <a href="https://www.charitywater.org/" target="_blank" rel="noopener" class="footer-link">learn more</a>
+    <span class="footer-sep">·</span>
+    <a href="https://www.charitywater.org/take-action" target="_blank" rel="noopener" class="footer-link footer-donate">donate now</a>
+  </footer>
 
   <script src="script.js"></script>
 </body>

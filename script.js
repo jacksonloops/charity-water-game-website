@@ -13,39 +13,107 @@ const PIPE_TYPES = {
   tee:      [1, 1, 1, 0],
 };
 
-// Level presets — null cells get random pipes assigned
-const LEVELS = [
-  {
-    time: 60,
-    preset: [
-      [null,               null,               null,               null,               null              ],
-      [null,               {t:'elbow',  r:1},  {t:'straight',r:0}, {t:'elbow',  r:0},  null              ],
-      [{t:'straight',r:1}, {t:'tee',   r:2},  {t:'straight',r:0}, {t:'tee',   r:1},  {t:'straight',r:1}],
-      [null,               {t:'elbow',  r:0},  {t:'straight',r:0}, {t:'elbow',  r:3},  null              ],
-      [null,               null,               null,               null,               null              ],
-    ]
-  },
-  {
-    time: 50,
-    preset: [
-      [null,               {t:'elbow',  r:1},  {t:'straight',r:1}, {t:'elbow',  r:2},  null              ],
-      [{t:'straight',r:0}, {t:'tee',   r:0},  {t:'tee',    r:2},  {t:'tee',   r:0},  {t:'straight',r:0}],
-      [null,               {t:'straight',r:0},{t:'elbow',  r:2},  {t:'straight',r:0}, null              ],
-      [{t:'elbow', r:1},   {t:'straight',r:1},{t:'tee',    r:3},  {t:'elbow',  r:3},  null              ],
-      [null,               null,               {t:'straight',r:0}, null,               null              ],
-    ]
-  },
-  {
-    time: 45,
-    preset: [
-      [null,               {t:'straight',r:1},{t:'tee',    r:1},  {t:'straight',r:1}, null              ],
-      [{t:'elbow', r:1},   {t:'tee',   r:0},  {t:'tee',    r:2},  {t:'tee',   r:1},  {t:'elbow',  r:2}],
-      [{t:'straight',r:0},{t:'tee',   r:3},  {t:'elbow',  r:0},  {t:'tee',   r:1},  {t:'straight',r:0}],
-      [{t:'elbow', r:0},   {t:'straight',r:1},{t:'tee',    r:3},  {t:'straight',r:1},{t:'elbow',   r:3}],
-      [null,               null,               {t:'straight',r:0}, null,               null              ],
-    ]
-  }
-];
+// ─── Difficulty configs ──────────────────────────────────────
+const DIFFICULTY_LEVELS = {
+  easy: [
+    {
+      time: 90,
+      preset: [
+        [null,               {t:'elbow',  r:0},  {t:'straight',r:0}, {t:'elbow',  r:1},  null              ],
+        [{t:'straight',r:0}, {t:'tee',   r:3},  {t:'straight',r:0}, {t:'tee',   r:1},  {t:'straight',r:0}],
+        [{t:'straight',r:0}, {t:'straight',r:0},{t:'elbow',  r:0},  {t:'straight',r:0}, {t:'straight',r:0}],
+        [{t:'straight',r:0}, {t:'tee',   r:1},  {t:'straight',r:0}, {t:'tee',   r:3},  {t:'straight',r:0}],
+        [null,               {t:'elbow',  r:3},  {t:'straight',r:0}, {t:'elbow',  r:2},  null              ],
+      ]
+    },
+    {
+      time: 90,
+      preset: [
+        [null,               {t:'straight',r:1},{t:'elbow',  r:1},  {t:'straight',r:1}, null              ],
+        [{t:'elbow',  r:1},  {t:'tee',   r:0},  {t:'tee',   r:2},  {t:'tee',   r:0},  {t:'elbow',  r:2} ],
+        [{t:'straight',r:0},{t:'straight',r:0},{t:'elbow',  r:3},  {t:'straight',r:0},{t:'straight',r:0} ],
+        [{t:'elbow',  r:0},  {t:'tee',   r:2},  {t:'straight',r:0},{t:'tee',   r:2},  {t:'elbow',  r:3} ],
+        [null,               {t:'elbow',  r:1},  {t:'straight',r:0},{t:'elbow',  r:2},  null              ],
+      ]
+    },
+    {
+      time: 80,
+      preset: [
+        [null,               {t:'elbow',  r:1},  {t:'straight',r:1},{t:'elbow',  r:2},  null              ],
+        [{t:'straight',r:0},{t:'tee',   r:0},  {t:'tee',   r:2},  {t:'tee',   r:0},  {t:'straight',r:0}],
+        [{t:'elbow',  r:1},  {t:'tee',   r:3},  {t:'elbow',  r:0}, {t:'tee',   r:1},  {t:'elbow',  r:2} ],
+        [{t:'straight',r:0},{t:'tee',   r:1},  {t:'straight',r:0},{t:'tee',   r:3},  {t:'straight',r:0}],
+        [null,               {t:'elbow',  r:0},  {t:'straight',r:0},{t:'elbow',  r:3},  null              ],
+      ]
+    },
+  ],
+
+  medium: [
+    {
+      time: 60,
+      preset: [
+        [null,               null,               null,               null,               null              ],
+        [null,               {t:'elbow',  r:1},  {t:'straight',r:0}, {t:'elbow',  r:0},  null              ],
+        [{t:'straight',r:1}, {t:'tee',   r:2},  {t:'straight',r:0}, {t:'tee',   r:1},  {t:'straight',r:1}],
+        [null,               {t:'elbow',  r:0},  {t:'straight',r:0}, {t:'elbow',  r:3},  null              ],
+        [null,               null,               null,               null,               null              ],
+      ]
+    },
+    {
+      time: 60,
+      preset: [
+        [null,               {t:'elbow',  r:1},  {t:'straight',r:1}, {t:'elbow',  r:2},  null              ],
+        [{t:'straight',r:0}, {t:'tee',   r:0},  {t:'tee',    r:2},  {t:'tee',   r:0},  {t:'straight',r:0}],
+        [null,               {t:'straight',r:0},{t:'elbow',  r:2},  {t:'straight',r:0}, null              ],
+        [{t:'elbow', r:1},   {t:'straight',r:1},{t:'tee',    r:3},  {t:'elbow',  r:3},  null              ],
+        [null,               null,               {t:'straight',r:0}, null,               null              ],
+      ]
+    },
+    {
+      time: 50,
+      preset: [
+        [null,               {t:'straight',r:1},{t:'tee',    r:1},  {t:'straight',r:1}, null              ],
+        [{t:'elbow', r:1},   {t:'tee',   r:0},  {t:'tee',    r:2},  {t:'tee',   r:1},  {t:'elbow',  r:2}],
+        [{t:'straight',r:0},{t:'tee',   r:3},  {t:'elbow',  r:0},  {t:'tee',   r:1},  {t:'straight',r:0}],
+        [{t:'elbow', r:0},   {t:'straight',r:1},{t:'tee',    r:3},  {t:'straight',r:1},{t:'elbow',   r:3}],
+        [null,               null,               {t:'straight',r:0}, null,               null              ],
+      ]
+    },
+  ],
+
+  hard: [
+    {
+      time: 40,
+      preset: [
+        [null, null, null, null, null],
+        [null, null, null, null, null],
+        [null, null, null, null, null],
+        [null, null, null, null, null],
+        [null, null, null, null, null],
+      ]
+    },
+    {
+      time: 35,
+      preset: [
+        [null, null, null, null, null],
+        [null, {t:'tee', r:2},  null, {t:'tee', r:0},  null],
+        [null, null, {t:'elbow', r:1}, null, null],
+        [null, {t:'tee', r:0},  null, {t:'tee', r:2},  null],
+        [null, null, null, null, null],
+      ]
+    },
+    {
+      time: 30,
+      preset: [
+        [null, null, null, null, null],
+        [null, null, null, null, null],
+        [null, null, {t:'tee', r:0}, null, null],
+        [null, null, null, null, null],
+        [null, null, null, null, null],
+      ]
+    },
+  ],
+};
 
 let grid = [];
 let gameActive = false;
@@ -53,6 +121,7 @@ let moves = 0;
 let timerVal = 60;
 let timerInterval = null;
 let currentLevel = 0;
+let currentDifficulty = null;
 
 // ─── Rotation helpers ────────────────────────────────────────
 function rotatePorts(ports, steps) {
@@ -132,8 +201,6 @@ function computeFlow() {
   const queue = [{ r: SOURCE.r, c: SOURCE.c }];
   visited[SOURCE.r][SOURCE.c] = true;
 
-  // Source opens right (idx 1) and down (idx 2)
-  // Well  accepts top (idx 0) and left (idx 3)
   const directions = [
     { dr: -1, dc:  0, fromIdx: 0, toIdx: 2 },
     { dr:  0, dc:  1, fromIdx: 1, toIdx: 3 },
@@ -209,8 +276,9 @@ function checkWin(flowMap) {
 }
 
 // ─── Build grid ──────────────────────────────────────────────
-function buildGrid(level) {
-  const preset = LEVELS[level % LEVELS.length].preset;
+function buildGrid(difficulty, level) {
+  const levels = DIFFICULTY_LEVELS[difficulty];
+  const preset = levels[level % levels.length].preset;
   const types = Object.keys(PIPE_TYPES);
   grid = [];
   for (let r = 0; r < GRID_SIZE; r++) {
@@ -243,6 +311,28 @@ function startTimer() {
   }, 1000);
 }
 
+// ─── Difficulty selection ────────────────────────────────────
+function showDifficultyScreen() {
+  clearInterval(timerInterval);
+  gameActive = false;
+  document.getElementById('difficulty-screen').classList.remove('hidden');
+  document.getElementById('game-screen').classList.add('hidden');
+}
+
+function selectDifficulty(diff) {
+  currentDifficulty = diff;
+  currentLevel = 0;
+
+  const pill = document.getElementById('diff-pill');
+  pill.setAttribute('data-diff', diff);
+  document.getElementById('diff-display').textContent = diff;
+
+  document.getElementById('difficulty-screen').classList.add('hidden');
+  document.getElementById('game-screen').classList.remove('hidden');
+
+  startGame();
+}
+
 // ─── Game flow ───────────────────────────────────────────────
 function startGame() {
   document.getElementById('win-overlay').classList.add('hidden');
@@ -253,16 +343,16 @@ function startGame() {
   document.getElementById('moves').textContent = '0';
   document.getElementById('level').textContent = currentLevel + 1;
 
-  timerVal = LEVELS[currentLevel % LEVELS.length].time;
+  const levels = DIFFICULTY_LEVELS[currentDifficulty];
+  timerVal = levels[currentLevel % levels.length].time;
   document.getElementById('timer').textContent = timerVal;
   document.getElementById('timer').classList.remove('urgent');
 
-  buildGrid(currentLevel);
+  buildGrid(currentDifficulty, currentLevel);
   gameActive = true;
   startTimer();
   render(computeFlow());
 
-  document.getElementById('start-btn').disabled = true;
   document.getElementById('reset-btn').disabled = false;
 }
 
@@ -299,7 +389,7 @@ function launchConfetti() {
       p.x  += p.vx;
       p.y  += p.vy;
       p.rot += p.vr;
-      p.vy += 0.06; // gravity
+      p.vy += 0.06;
       ctx.save();
       ctx.translate(p.x, p.y);
       ctx.rotate(p.rot);
@@ -336,7 +426,6 @@ function endGame(won) {
     const overlay = document.getElementById('win-overlay');
     const card    = document.getElementById('win-card');
 
-    // Reset card state
     card.style.opacity = '0';
     card.style.transform = 'scale(0.7)';
     card.classList.remove('animate-in');
@@ -344,7 +433,6 @@ function endGame(won) {
     overlay.classList.remove('hidden');
     const stopConfetti = launchConfetti();
 
-    // After confetti runs, pop in the card
     setTimeout(() => {
       stopConfetti();
       card.classList.add('animate-in');
@@ -353,16 +441,19 @@ function endGame(won) {
   } else {
     document.getElementById('lose-overlay').classList.remove('hidden');
   }
-  document.getElementById('start-btn').disabled = false;
   document.getElementById('reset-btn').disabled = true;
 }
 
 // ─── Button wiring ────────────────────────────────────────────
-document.getElementById('start-btn').addEventListener('click', startGame);
-document.getElementById('reset-btn').addEventListener('click', () => { currentLevel = currentLevel; startGame(); });
-document.getElementById('next-level-btn').addEventListener('click', () => { currentLevel++; startGame(); });
-document.getElementById('retry-btn').addEventListener('click', () => { startGame(); });
+document.querySelectorAll('.diff-card').forEach(btn => {
+  btn.addEventListener('click', () => selectDifficulty(btn.dataset.diff));
+});
 
-// ─── Preview on load ─────────────────────────────────────────
-buildGrid(0);
-render(null);
+document.getElementById('reset-btn').addEventListener('click', () => startGame());
+document.getElementById('back-btn').addEventListener('click', () => showDifficultyScreen());
+
+document.getElementById('next-level-btn').addEventListener('click', () => { currentLevel++; startGame(); });
+document.getElementById('change-diff-btn').addEventListener('click', () => showDifficultyScreen());
+
+document.getElementById('retry-btn').addEventListener('click', () => startGame());
+document.getElementById('change-diff-btn-lose').addEventListener('click', () => showDifficultyScreen());
