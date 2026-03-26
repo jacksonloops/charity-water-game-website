@@ -198,6 +198,69 @@ h1 span {
   color: var(--muted);
 }
 
+/* ── Level Progress Tracker ── */
+.level-tracker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 18px;
+}
+
+.level-dot {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2.5px solid var(--pipe-border);
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--gray-mid);
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  z-index: 1;
+}
+
+.level-dot.active {
+  border-color: var(--yellow-dark);
+  background: var(--yellow-soft);
+  color: var(--dark);
+  transform: scale(1.15);
+  box-shadow: 0 0 12px rgba(255, 201, 7, 0.35);
+}
+
+.level-dot.completed {
+  border-color: var(--dark);
+  background: var(--dark);
+  color: var(--yellow);
+}
+
+.level-dot.completed span {
+  display: none;
+}
+
+.level-dot.completed::after {
+  content: '✓';
+  font-size: 16px;
+  color: var(--yellow);
+  font-weight: 700;
+}
+
+.level-connector {
+  width: 28px;
+  height: 3px;
+  background: var(--pipe-border);
+  transition: background 0.3s;
+}
+
+.level-connector.filled {
+  background: var(--dark);
+}
+
 /* ── Stats bar ── */
 .stats-bar {
   display: flex;
@@ -358,7 +421,7 @@ h1 span {
   z-index: 10;
 }
 
-#confetti-canvas {
+#confetti-canvas, #final-confetti-canvas {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -380,6 +443,8 @@ h1 span {
 .win-overlay  { background: rgba(255,201,7,0.15); }
 .lose-overlay { background: rgba(0,0,0,0.15); }
 
+.final-win-overlay { background: rgba(255,201,7,0.22); }
+
 .win-overlay.hidden, .lose-overlay.hidden { display: none; }
 
 .win-card, .lose-card {
@@ -389,6 +454,11 @@ h1 span {
   text-align: center;
   box-shadow: 0 16px 60px rgba(0,0,0,0.18);
   border: 2px solid var(--yellow);
+}
+
+.final-win-card {
+  border: 3px solid var(--yellow);
+  box-shadow: 0 16px 60px rgba(255,201,7,0.3), 0 0 80px rgba(255,201,7,0.1);
 }
 
 .win-icon, .lose-icon { font-size: 52px; margin-bottom: 12px; }
@@ -464,6 +534,15 @@ button {
 }
 #next-level-btn:hover { background: var(--gray-dark); transform: translateY(-2px); }
 
+#play-again-btn {
+  background: var(--yellow);
+  color: var(--black);
+  box-shadow: 0 4px 16px rgba(255,201,7,0.35);
+  font-size: 18px;
+  padding: 14px 36px;
+}
+#play-again-btn:hover { background: var(--yellow-dark); transform: translateY(-2px); }
+
 #retry-btn {
   background: var(--gray-dark);
   color: var(--white);
@@ -514,26 +593,26 @@ button {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  background: rgba(255, 255, 255, 0.88);
+  background: rgba(17, 17, 17, 0.95);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-top: 1px solid rgba(0, 0, 0, 0.07);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   font-family: 'Cormorant Garamond', serif;
   font-size: 13px;
   letter-spacing: 2px;
 }
 
 .footer-made {
-  color: var(--muted);
+  color: var(--gray-light);
   font-weight: 400;
 }
 
 .footer-sep {
-  color: var(--pipe-border);
+  color: var(--gray-mid);
 }
 
 .footer-link {
-  color: var(--gray-dark);
+  color: var(--gray-light);
   text-decoration: none;
   font-weight: 600;
   letter-spacing: 2px;
@@ -541,7 +620,7 @@ button {
 }
 
 .footer-link:hover {
-  color: var(--black);
+  color: var(--white);
 }
 
 .footer-donate {
@@ -563,4 +642,7 @@ button {
   .diff-icon { font-size: 28px; }
   .footer-made { display: none; }
   .site-footer { font-size: 12px; gap: 8px; }
+
+  .level-dot { width: 30px; height: 30px; font-size: 13px; }
+  .level-connector { width: 18px; }
 }

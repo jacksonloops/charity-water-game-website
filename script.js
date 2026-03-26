@@ -3,6 +3,7 @@
 // ============================================================
 
 const GRID_SIZE = 5;
+const MAX_LEVELS = 5;
 const SOURCE = { r: 0, c: 0 };
 const WELL   = { r: 4, c: 4 };
 
@@ -13,9 +14,10 @@ const PIPE_TYPES = {
   tee:      [1, 1, 1, 0],
 };
 
-// ─── Difficulty configs ──────────────────────────────────────
+// ─── Difficulty configs (5 levels each) ──────────────────────
 const DIFFICULTY_LEVELS = {
   easy: [
+    // Level 1
     {
       time: 90,
       preset: [
@@ -26,6 +28,7 @@ const DIFFICULTY_LEVELS = {
         [null,               {t:'elbow',  r:3},  {t:'straight',r:0}, {t:'elbow',  r:2},  null              ],
       ]
     },
+    // Level 2
     {
       time: 90,
       preset: [
@@ -36,6 +39,7 @@ const DIFFICULTY_LEVELS = {
         [null,               {t:'elbow',  r:1},  {t:'straight',r:0},{t:'elbow',  r:2},  null              ],
       ]
     },
+    // Level 3
     {
       time: 80,
       preset: [
@@ -46,9 +50,32 @@ const DIFFICULTY_LEVELS = {
         [null,               {t:'elbow',  r:0},  {t:'straight',r:0},{t:'elbow',  r:3},  null              ],
       ]
     },
+    // Level 4
+    {
+      time: 75,
+      preset: [
+        [null,               {t:'elbow',  r:0},  {t:'tee',    r:1},  {t:'elbow',  r:1},  null              ],
+        [{t:'elbow',  r:1},  {t:'tee',   r:2},  {t:'straight',r:0}, {t:'tee',   r:0},  {t:'straight',r:0}],
+        [{t:'straight',r:0},{t:'elbow',  r:3},  {t:'tee',    r:1},  {t:'elbow',  r:2},  {t:'straight',r:0}],
+        [{t:'straight',r:0},{t:'tee',   r:1},  {t:'straight',r:0}, {t:'tee',   r:3},  {t:'straight',r:0}],
+        [null,               {t:'elbow',  r:0},  {t:'straight',r:0}, {t:'elbow',  r:3},  null              ],
+      ]
+    },
+    // Level 5
+    {
+      time: 70,
+      preset: [
+        [null,               {t:'tee',    r:1},  {t:'straight',r:1}, {t:'elbow',  r:2},  null              ],
+        [{t:'elbow',  r:1},  {t:'tee',   r:0},  {t:'tee',    r:2},  {t:'tee',   r:0},  {t:'elbow',  r:2} ],
+        [{t:'straight',r:0},{t:'tee',   r:3},  {t:'tee',    r:0},  {t:'tee',   r:1},  {t:'straight',r:0}],
+        [{t:'elbow',  r:0},  {t:'tee',   r:2},  {t:'tee',    r:0},  {t:'tee',   r:2},  {t:'elbow',  r:3} ],
+        [null,               {t:'elbow',  r:0},  {t:'straight',r:0}, {t:'tee',   r:3},  null              ],
+      ]
+    },
   ],
 
   medium: [
+    // Level 1
     {
       time: 60,
       preset: [
@@ -59,6 +86,7 @@ const DIFFICULTY_LEVELS = {
         [null,               null,               null,               null,               null              ],
       ]
     },
+    // Level 2
     {
       time: 60,
       preset: [
@@ -69,6 +97,7 @@ const DIFFICULTY_LEVELS = {
         [null,               null,               {t:'straight',r:0}, null,               null              ],
       ]
     },
+    // Level 3
     {
       time: 50,
       preset: [
@@ -79,9 +108,32 @@ const DIFFICULTY_LEVELS = {
         [null,               null,               {t:'straight',r:0}, null,               null              ],
       ]
     },
+    // Level 4
+    {
+      time: 50,
+      preset: [
+        [null,               {t:'elbow',  r:0},  {t:'straight',r:1}, {t:'tee',   r:1},  null              ],
+        [{t:'straight',r:0}, {t:'tee',   r:1},  {t:'tee',    r:2},  {t:'elbow', r:3},  {t:'straight',r:0}],
+        [{t:'elbow',  r:1},  {t:'tee',   r:0},  {t:'straight',r:0}, {t:'tee',   r:0},  {t:'elbow',  r:2} ],
+        [{t:'straight',r:0}, {t:'elbow', r:3},  {t:'tee',    r:1},  {t:'tee',   r:2},  {t:'straight',r:0}],
+        [null,               null,               {t:'straight',r:0}, {t:'elbow', r:3},  null              ],
+      ]
+    },
+    // Level 5
+    {
+      time: 45,
+      preset: [
+        [null,               {t:'tee',    r:1},  {t:'straight',r:1}, {t:'elbow',  r:2},  null              ],
+        [{t:'elbow',  r:1},  {t:'tee',   r:2},  {t:'tee',    r:0},  {t:'tee',   r:0},  {t:'straight',r:0}],
+        [{t:'straight',r:0},{t:'tee',   r:3},  {t:'tee',    r:1},  {t:'tee',   r:1},  {t:'straight',r:0}],
+        [{t:'straight',r:0},{t:'tee',   r:0},  {t:'straight',r:0}, {t:'tee',   r:2},  {t:'straight',r:0}],
+        [null,               {t:'elbow',  r:0},  {t:'straight',r:0}, {t:'elbow',  r:3},  null              ],
+      ]
+    },
   ],
 
   hard: [
+    // Level 1
     {
       time: 40,
       preset: [
@@ -92,6 +144,7 @@ const DIFFICULTY_LEVELS = {
         [null, null, null, null, null],
       ]
     },
+    // Level 2
     {
       time: 35,
       preset: [
@@ -102,6 +155,7 @@ const DIFFICULTY_LEVELS = {
         [null, null, null, null, null],
       ]
     },
+    // Level 3
     {
       time: 30,
       preset: [
@@ -112,16 +166,153 @@ const DIFFICULTY_LEVELS = {
         [null, null, null, null, null],
       ]
     },
+    // Level 4
+    {
+      time: 28,
+      preset: [
+        [null, null, null, null, null],
+        [null, {t:'elbow', r:1}, null, null, null],
+        [null, null, null, null, null],
+        [null, null, null, {t:'elbow', r:3}, null],
+        [null, null, null, null, null],
+      ]
+    },
+    // Level 5
+    {
+      time: 25,
+      preset: [
+        [null, null, null, null, null],
+        [null, null, null, null, null],
+        [null, null, null, null, null],
+        [null, null, null, null, null],
+        [null, null, null, null, null],
+      ]
+    },
   ],
 };
 
 let grid = [];
 let gameActive = false;
 let moves = 0;
+let totalMoves = 0;
 let timerVal = 60;
 let timerInterval = null;
 let currentLevel = 0;
 let currentDifficulty = null;
+
+// ─── Water filling sound effect (Web Audio API) ──────────────
+function playWaterFillSound() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const duration = 1.8;
+    const now = ctx.currentTime;
+
+    // Layer 1: Rising filtered noise (the "filling" rush)
+    const bufferSize = ctx.sampleRate * duration;
+    const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const noiseData = noiseBuffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      noiseData[i] = (Math.random() * 2 - 1) * 0.5;
+    }
+
+    const noiseSource = ctx.createBufferSource();
+    noiseSource.buffer = noiseBuffer;
+
+    const noiseFilter = ctx.createBiquadFilter();
+    noiseFilter.type = 'bandpass';
+    noiseFilter.Q.value = 1.5;
+    noiseFilter.frequency.setValueAtTime(200, now);
+    noiseFilter.frequency.exponentialRampToValueAtTime(2000, now + duration * 0.7);
+    noiseFilter.frequency.exponentialRampToValueAtTime(800, now + duration);
+
+    const noiseGain = ctx.createGain();
+    noiseGain.gain.setValueAtTime(0, now);
+    noiseGain.gain.linearRampToValueAtTime(0.18, now + 0.15);
+    noiseGain.gain.linearRampToValueAtTime(0.22, now + duration * 0.6);
+    noiseGain.gain.linearRampToValueAtTime(0, now + duration);
+
+    noiseSource.connect(noiseFilter);
+    noiseFilter.connect(noiseGain);
+    noiseGain.connect(ctx.destination);
+
+    // Layer 2: Rising bubbly tones
+    const bubbleCount = 12;
+    for (let i = 0; i < bubbleCount; i++) {
+      const osc = ctx.createOscillator();
+      const oscGain = ctx.createGain();
+      const bubbleStart = now + (i / bubbleCount) * duration * 0.8;
+      const bubbleDur = 0.12 + Math.random() * 0.15;
+      const baseFreq = 300 + (i / bubbleCount) * 600 + Math.random() * 100;
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(baseFreq, bubbleStart);
+      osc.frequency.exponentialRampToValueAtTime(baseFreq * 1.5, bubbleStart + bubbleDur);
+
+      oscGain.gain.setValueAtTime(0, bubbleStart);
+      oscGain.gain.linearRampToValueAtTime(0.06 + Math.random() * 0.04, bubbleStart + 0.02);
+      oscGain.gain.exponentialRampToValueAtTime(0.001, bubbleStart + bubbleDur);
+
+      osc.connect(oscGain);
+      oscGain.connect(ctx.destination);
+      osc.start(bubbleStart);
+      osc.stop(bubbleStart + bubbleDur);
+    }
+
+    // Layer 3: Low resonant sweep (body of water rising)
+    const sweep = ctx.createOscillator();
+    const sweepGain = ctx.createGain();
+    sweep.type = 'triangle';
+    sweep.frequency.setValueAtTime(80, now);
+    sweep.frequency.exponentialRampToValueAtTime(250, now + duration * 0.8);
+    sweep.frequency.exponentialRampToValueAtTime(180, now + duration);
+
+    sweepGain.gain.setValueAtTime(0, now);
+    sweepGain.gain.linearRampToValueAtTime(0.1, now + 0.2);
+    sweepGain.gain.linearRampToValueAtTime(0.12, now + duration * 0.7);
+    sweepGain.gain.linearRampToValueAtTime(0, now + duration);
+
+    sweep.connect(sweepGain);
+    sweepGain.connect(ctx.destination);
+    sweep.start(now);
+    sweep.stop(now + duration);
+
+    // Layer 4: Final "splash" at the end
+    const splashTime = now + duration * 0.75;
+    const splashBuf = ctx.createBuffer(1, ctx.sampleRate * 0.4, ctx.sampleRate);
+    const splashData = splashBuf.getChannelData(0);
+    for (let i = 0; i < splashBuf.length; i++) {
+      splashData[i] = (Math.random() * 2 - 1) * 0.6;
+    }
+
+    const splashSource = ctx.createBufferSource();
+    splashSource.buffer = splashBuf;
+
+    const splashFilter = ctx.createBiquadFilter();
+    splashFilter.type = 'highpass';
+    splashFilter.frequency.setValueAtTime(800, splashTime);
+    splashFilter.frequency.exponentialRampToValueAtTime(3000, splashTime + 0.3);
+
+    const splashGain = ctx.createGain();
+    splashGain.gain.setValueAtTime(0, splashTime);
+    splashGain.gain.linearRampToValueAtTime(0.2, splashTime + 0.03);
+    splashGain.gain.exponentialRampToValueAtTime(0.001, splashTime + 0.4);
+
+    splashSource.connect(splashFilter);
+    splashFilter.connect(splashGain);
+    splashGain.connect(ctx.destination);
+    splashSource.start(splashTime);
+    splashSource.stop(splashTime + 0.4);
+
+    // Start the noise layer
+    noiseSource.start(now);
+    noiseSource.stop(now + duration);
+
+    // Clean up audio context after sound finishes
+    setTimeout(() => ctx.close(), (duration + 0.5) * 1000);
+  } catch (e) {
+    console.warn('Water sound effect unavailable:', e);
+  }
+}
 
 // ─── Rotation helpers ────────────────────────────────────────
 function rotatePorts(ports, steps) {
@@ -232,6 +423,25 @@ function computeFlow() {
   return visited;
 }
 
+// ─── Level tracker UI ────────────────────────────────────────
+function updateLevelTracker() {
+  const dots = document.querySelectorAll('.level-dot');
+  const connectors = document.querySelectorAll('.level-connector');
+
+  dots.forEach((dot, i) => {
+    dot.classList.remove('active', 'completed');
+    if (i < currentLevel) {
+      dot.classList.add('completed');
+    } else if (i === currentLevel) {
+      dot.classList.add('active');
+    }
+  });
+
+  connectors.forEach((conn, i) => {
+    conn.classList.toggle('filled', i < currentLevel);
+  });
+}
+
 // ─── Render ──────────────────────────────────────────────────
 function render(flowMap) {
   const gridEl = document.getElementById('game-grid');
@@ -322,6 +532,7 @@ function showDifficultyScreen() {
 function selectDifficulty(diff) {
   currentDifficulty = diff;
   currentLevel = 0;
+  totalMoves = 0;
 
   const pill = document.getElementById('diff-pill');
   pill.setAttribute('data-diff', diff);
@@ -337,16 +548,18 @@ function selectDifficulty(diff) {
 function startGame() {
   document.getElementById('win-overlay').classList.add('hidden');
   document.getElementById('lose-overlay').classList.add('hidden');
+  document.getElementById('final-win-overlay').classList.add('hidden');
   document.getElementById('message-bar').classList.add('hidden');
 
   moves = 0;
   document.getElementById('moves').textContent = '0';
-  document.getElementById('level').textContent = currentLevel + 1;
 
   const levels = DIFFICULTY_LEVELS[currentDifficulty];
   timerVal = levels[currentLevel % levels.length].time;
   document.getElementById('timer').textContent = timerVal;
   document.getElementById('timer').classList.remove('urgent');
+
+  updateLevelTracker();
 
   buildGrid(currentDifficulty, currentLevel);
   gameActive = true;
@@ -356,15 +569,16 @@ function startGame() {
   document.getElementById('reset-btn').disabled = false;
 }
 
-function launchConfetti() {
-  const canvas = document.getElementById('confetti-canvas');
+function launchConfetti(canvasId) {
+  const canvas = document.getElementById(canvasId || 'confetti-canvas');
   const ctx = canvas.getContext('2d');
   const rect = canvas.parentElement.getBoundingClientRect();
   canvas.width  = rect.width;
   canvas.height = rect.height;
 
   const COLORS = ['#FFC907','#1C1C1C','#E6B400','#4A4A4A','#FFF3B0','#888888','#ffffff'];
-  const particles = Array.from({ length: 90 }, () => ({
+  const count = canvasId === 'final-confetti-canvas' ? 140 : 90;
+  const particles = Array.from({ length: count }, () => ({
     x: Math.random() * canvas.width,
     y: -10 - Math.random() * 40,
     r: 4 + Math.random() * 6,
@@ -378,7 +592,7 @@ function launchConfetti() {
 
   let frame;
   let startTime = null;
-  const DURATION = 2000;
+  const DURATION = canvasId === 'final-confetti-canvas' ? 3000 : 2000;
 
   function draw(ts) {
     if (!startTime) startTime = ts;
@@ -422,21 +636,52 @@ function endGame(won) {
   render(computeFlow());
 
   if (won) {
-    document.getElementById('win-moves').textContent = moves;
-    const overlay = document.getElementById('win-overlay');
-    const card    = document.getElementById('win-card');
+    // Play the water filling sound effect
+    playWaterFillSound();
 
-    card.style.opacity = '0';
-    card.style.transform = 'scale(0.7)';
-    card.classList.remove('animate-in');
+    // Add this level's moves to total
+    totalMoves += moves;
 
-    overlay.classList.remove('hidden');
-    const stopConfetti = launchConfetti();
+    // Check if this was the final level
+    if (currentLevel >= MAX_LEVELS - 1) {
+      // ── Final victory! ──
+      // Mark all dots as completed in tracker
+      currentLevel = MAX_LEVELS;
+      updateLevelTracker();
 
-    setTimeout(() => {
-      stopConfetti();
-      card.classList.add('animate-in');
-    }, 1800);
+      document.getElementById('final-total-moves').textContent = totalMoves;
+      const overlay = document.getElementById('final-win-overlay');
+      const card    = document.getElementById('final-win-card');
+
+      card.style.opacity = '0';
+      card.style.transform = 'scale(0.7)';
+      card.classList.remove('animate-in');
+
+      overlay.classList.remove('hidden');
+      const stopConfetti = launchConfetti('final-confetti-canvas');
+
+      setTimeout(() => {
+        stopConfetti();
+        card.classList.add('animate-in');
+      }, 1800);
+    } else {
+      // ── Normal level win ──
+      document.getElementById('win-moves').textContent = moves;
+      const overlay = document.getElementById('win-overlay');
+      const card    = document.getElementById('win-card');
+
+      card.style.opacity = '0';
+      card.style.transform = 'scale(0.7)';
+      card.classList.remove('animate-in');
+
+      overlay.classList.remove('hidden');
+      const stopConfetti = launchConfetti('confetti-canvas');
+
+      setTimeout(() => {
+        stopConfetti();
+        card.classList.add('animate-in');
+      }, 1800);
+    }
 
   } else {
     document.getElementById('lose-overlay').classList.remove('hidden');
@@ -457,3 +702,11 @@ document.getElementById('change-diff-btn').addEventListener('click', () => showD
 
 document.getElementById('retry-btn').addEventListener('click', () => startGame());
 document.getElementById('change-diff-btn-lose').addEventListener('click', () => showDifficultyScreen());
+
+// Final win screen buttons
+document.getElementById('play-again-btn').addEventListener('click', () => {
+  currentLevel = 0;
+  totalMoves = 0;
+  startGame();
+});
+document.getElementById('change-diff-btn-final').addEventListener('click', () => showDifficultyScreen());

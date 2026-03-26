@@ -42,6 +42,20 @@
 
     <!-- ── Game Screen (hidden until difficulty chosen) ── -->
     <div id="game-screen" class="hidden">
+
+      <!-- Level progress tracker -->
+      <div class="level-tracker" id="level-tracker">
+        <div class="level-dot completed" data-lvl="0"><span>1</span></div>
+        <div class="level-connector"></div>
+        <div class="level-dot" data-lvl="1"><span>2</span></div>
+        <div class="level-connector"></div>
+        <div class="level-dot" data-lvl="2"><span>3</span></div>
+        <div class="level-connector"></div>
+        <div class="level-dot" data-lvl="3"><span>4</span></div>
+        <div class="level-connector"></div>
+        <div class="level-dot" data-lvl="4"><span>5</span></div>
+      </div>
+
       <div class="stats-bar">
         <div class="stat-pill">
           <span class="stat-label">Moves</span>
@@ -50,10 +64,6 @@
         <div class="stat-pill timer-pill">
           <span class="stat-label">Time</span>
           <span class="stat-value" id="timer">60</span>
-        </div>
-        <div class="stat-pill">
-          <span class="stat-label">Level</span>
-          <span class="stat-value" id="level">1</span>
         </div>
         <div class="stat-pill diff-pill" id="diff-pill">
           <span class="stat-label">Mode</span>
@@ -74,6 +84,19 @@
             <div class="win-buttons">
               <button id="next-level-btn">next level →</button>
               <button id="change-diff-btn" class="btn-secondary">change difficulty</button>
+            </div>
+          </div>
+        </div>
+        <!-- Final victory overlay (all 5 levels beaten) -->
+        <div id="final-win-overlay" class="win-overlay final-win-overlay hidden">
+          <canvas id="final-confetti-canvas"></canvas>
+          <div class="win-card final-win-card" id="final-win-card" style="opacity:0;transform:scale(0.7)">
+            <div class="win-icon">🏆</div>
+            <h2>quest complete!</h2>
+            <p>You brought water to every village — <strong id="final-total-moves">0</strong> total moves across all 5 levels!</p>
+            <div class="win-buttons">
+              <button id="play-again-btn">play again</button>
+              <button id="change-diff-btn-final" class="btn-secondary">change difficulty</button>
             </div>
           </div>
         </div>
